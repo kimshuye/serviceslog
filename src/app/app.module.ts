@@ -22,6 +22,8 @@ import {
 
  } from '@angular/material';
 
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -42,7 +44,7 @@ import { environment } from '../environments/environment';
 
     AppRoutingModule,
     // ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
-
+    
 
     MatButtonModule,
     MatCheckboxModule,
@@ -56,6 +58,9 @@ import { environment } from '../environments/environment';
     MatTabsModule,
     MatListModule,
     MatIconModule,
+
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule,
 
   ],
   exports: [
