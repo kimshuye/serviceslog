@@ -41,11 +41,27 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireFunctionsModule } from 'angularfire2/functions';
+import { MainNavComponent } from './ui/main-nav/main-nav.component';
+import { UserProfileComponent } from './ui/user-profile/user-profile.component';
+import { HomePageComponent } from './ui/home-page/home-page.component';
+import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.component';
+import { NotificationMessageComponent } from './ui/notification-message/notification-message.component';
+import { SsrPageComponent } from './ui/ssr-page/ssr-page.component';
+import { UserFormComponent } from './ui/user-form/user-form.component';
+import { UserLoginComponent } from './ui/user-login/user-login.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MainNavComponent,
+    UserProfileComponent,
+    HomePageComponent,
+    LoadingSpinnerComponent,
+    NotificationMessageComponent,
+    SsrPageComponent,
+    UserFormComponent,
+    UserLoginComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
