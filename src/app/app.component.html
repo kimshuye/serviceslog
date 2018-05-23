@@ -1,12 +1,38 @@
-<h1>Welcome to Firestarter!</h1>
 
-<p>I am a Progressive Web App (PWA) built with Angular and Firebase.</p>
+<div id="wrapper">
+    <!-- <main-nav></main-nav> -->
+  
+    <div class="content columns">
+      <aside class="column is-2 is-offset-1">
+        <!-- <user-profile></user-profile> -->
+      </aside>
+  
+      <main class="column is-8">
+        <!-- <notification-message></notification-message> -->
+  
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  
+  
+    <footer class="footer">
+      Angular v6.x + Firebase PWA Starter App <br>
+      Build me from scratch at <a href="https://angularfirebase.com">AngularFirebase.com</a><br>
+      <br>Open Source | MIT License | Created by <a href="https://jeffdelaney.me">Jeff Delaney</a>
+    </footer>
+
+</div>
+  
+
+<!-- <h1>Welcome to Firestarter!</h1>
+
+<p>I am a Progressive Web App (PWA) built with Angular and Firebase.</p> -->
 
 <!--output '2015-06-15 05:03 PM GMT+7'-->
-<p>The custom date is {{today | date:'yyyy-MM-dd HH:mm a z':'+0700'}}</p>
+<!-- <p>The custom date is {{today | date:'yyyy-MM-dd HH:mm a z':'+0700'}}</p> -->
 
 <!--output '2015-06-15 09:03 AM GMT+7'-->
-<p>The custom date with fixed timezone is {{fixedTimezone | date:'yyyy-MM-dd HH:mm a z':'+0700'}}</p>
+<!-- <p>The custom date with fixed timezone is {{fixedTimezone | date:'yyyy-MM-dd HH:mm a z':'+0700'}}</p>
 
 <p ngNonBindable>{{ today | date: 'M/d/y' }}</p>
 <p>{{ today | date: 'M/d/y' }}</p>
@@ -36,6 +62,5 @@
     </label>
 
     <h4>Value From Picker: {{ dateTime | date:'yyyy-MM-dd HH:mm:ss z':'+0700' }}</h4>
-</div>
+</div> -->
 
-<router-outlet></router-outlet>
