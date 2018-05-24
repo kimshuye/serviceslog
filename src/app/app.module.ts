@@ -54,6 +54,7 @@ import { UserLoginComponent } from './ui/user-login/user-login.component';
 import { AuthService } from './core/auth.service';
 import { AuthGuard } from './core/auth.guard';
 import { NotifyService } from './core/notify.service';
+import { NotesModule } from './notes/notes.module';
 
 
 
@@ -87,6 +88,7 @@ import { NotifyService } from './core/notify.service';
     AngularFireFunctionsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     CoreModule,
+    NotesModule,
     
 
     MatButtonModule,

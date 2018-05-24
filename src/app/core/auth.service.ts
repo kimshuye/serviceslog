@@ -32,7 +32,7 @@ export class AuthService {
 
   user: Observable<User | null>;
 
-  currentUser:UsernameDb;
+  currentUser:any;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -43,13 +43,24 @@ export class AuthService {
   ) {
     this.user = this.afAuth.authState.pipe(
       switchMap(user => {
-        if (user) {
+        if (user) {          
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
           return of(null);
         }
       })
     );
+
+    // this.user.subscribe(user => {
+    //   this.currentUser = this.db.object(`users/${user.uid}`)
+    //   .snapshotChanges()
+    //   .pipe(map(c => ({ $uid: c.payload.key, ...c.payload.val() })));
+    // });
+    
+  }
+
+  getuserId(){
+    return this.user;
   }
 
   ////// OAuth Methods /////
@@ -184,6 +195,6 @@ export class AuthService {
     username = username.toLowerCase();
     return this.db.object(`usernames/${username}` )
       .snapshotChanges().pipe(
-      map(c => ({ $key: c.payload.key, ...c.payload.val() })));
+      map(c => ({ $username: c.payload.key, ...c.payload.val() })));
   }
 }
