@@ -184,6 +184,6 @@ export class AuthService {
     username = username.toLowerCase();
     return this.db.object(`usernames/${username}` )
       .snapshotChanges().pipe(
-      map(c => ({ $username: c.payload.key, ...c.payload.val() })));
+      map(c => ({ $key: c.payload.key, ...c.payload.val() })));
   }
 }

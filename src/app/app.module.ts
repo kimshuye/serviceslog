@@ -41,6 +41,8 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireFunctionsModule } from 'angularfire2/functions';
+
+import { CoreModule } from './core/core.module';
 import { MainNavComponent } from './ui/main-nav/main-nav.component';
 import { UserProfileComponent } from './ui/user-profile/user-profile.component';
 import { HomePageComponent } from './ui/home-page/home-page.component';
@@ -49,6 +51,10 @@ import { NotificationMessageComponent } from './ui/notification-message/notifica
 import { SsrPageComponent } from './ui/ssr-page/ssr-page.component';
 import { UserFormComponent } from './ui/user-form/user-form.component';
 import { UserLoginComponent } from './ui/user-login/user-login.component';
+import { AuthService } from './core/auth.service';
+import { AuthGuard } from './core/auth.guard';
+import { NotifyService } from './core/notify.service';
+
 
 
 @NgModule({
@@ -74,11 +80,13 @@ import { UserLoginComponent } from './ui/user-login/user-login.component';
 
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase, 'firestarter'),
+    AngularFireDatabaseModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
     AngularFireFunctionsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    CoreModule,
     
 
     MatButtonModule,
