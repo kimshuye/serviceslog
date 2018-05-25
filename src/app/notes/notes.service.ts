@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { AuthService } from '../core/auth.service';
 
 @Injectable()
@@ -12,17 +12,15 @@ export class NotesService {
   notesCollection: AngularFirestoreCollection<any>;
   noteDocument:   AngularFirestoreDocument<any>;
 
-  userId;
+  userId:string;
 
   constructor(private afs: AngularFirestore,
     public auth: AuthService
   ) {
-    this.auth.getuserId().subscribe(snap => {
-      this.userId = snap.uid;
-      console.log(+this.userId);
-    });
+    // this.userId = this.auth.getuserId();
     
     this.notesCollection = this.afs.collection(`notes`, (ref) => ref.orderBy('time', 'desc').limit(5));
+    // console.log(`menbers/${this.userId}/notes`);
   }
 
   getData(): Observable<any[]> {

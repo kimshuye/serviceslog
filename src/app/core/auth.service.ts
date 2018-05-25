@@ -32,7 +32,7 @@ export class AuthService {
 
   user: Observable<User | null>;
 
-  currentUser:any;
+  currentUser:UsernameDb;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -43,24 +43,23 @@ export class AuthService {
   ) {
     this.user = this.afAuth.authState.pipe(
       switchMap(user => {
-        if (user) {          
+        if (user) {
+          // this.currentUser.uid = user.uid;
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
           return of(null);
         }
       })
     );
-
-    // this.user.subscribe(user => {
-    //   this.currentUser = this.db.object(`users/${user.uid}`)
-    //   .snapshotChanges()
-    //   .pipe(map(c => ({ $uid: c.payload.key, ...c.payload.val() })));
-    // });
     
+    // this.user.subscribe(user=>{
+    //   this.currentUser.uid = user.uid;
+    // });
+        
   }
 
   getuserId(){
-    return this.user;
+    return this.currentUser.uid;
   }
 
   ////// OAuth Methods /////
@@ -158,7 +157,7 @@ export class AuthService {
   private updateUserData(user: User) {
 
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
-
+    // this.currentUser.uid = user.uid;
     const data: User = {
       uid: user.uid,
       username: user.username || null,
@@ -167,22 +166,22 @@ export class AuthService {
       photoURL: user.photoURL || 'https://goo.gl/Fz9nrQ',
     };
     
-    const data1 = {
-      email: user.email ,
-      username: user.username 
-    };
+    // const data1 = {
+    //   email: user.email ,
+    //   username: user.username 
+    // };
     
-    var update1 = {};
-    update1[`/users/${user.uid}`] = data1;
-    this.db.database.ref().update(update1);
+    // var update1 = {};
+    // update1[`/users/${user.uid}`] = data1;
+    // this.db.database.ref().update(update1);
 
-    const data2 = {
-      uid: user.uid
-    };
+    // const data2 = {
+    //   uid: user.uid
+    // };
     
-    var update2 = {};
-    update2[`/usernames/${user.username}`] = data2;
-    this.db.database.ref().update(update2);
+    // var update2 = {};
+    // update2[`/usernames/${user.username}`] = data2;
+    // this.db.database.ref().update(update2);
 
     return userRef.set(data);
   }
