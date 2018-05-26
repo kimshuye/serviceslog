@@ -5,7 +5,7 @@
 </p>
 <hr>
 
-<input [(ngModel)]="content" placeholder="Add your own note" class="input">
+<input [(ngModel)]="content" placeholder="Add your own note" class="input" (keyup.enter)="clickHandler() || content?.length < 2 || content?.length > 200 " >
 
 
 <button class="button is-success" (click)="clickHandler()" [disabled]="content?.length < 2 || content?.length > 200">

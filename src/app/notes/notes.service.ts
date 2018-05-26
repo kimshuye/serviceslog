@@ -5,6 +5,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { AuthService } from '../core/auth.service';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Injectable()
 export class NotesService {
@@ -12,14 +13,19 @@ export class NotesService {
   notesCollection: AngularFirestoreCollection<any>;
   noteDocument:   AngularFirestoreDocument<any>;
 
+  path:string = "notes";
+
   userId:string;
 
+  notesDb:Observable<any>;
+
   constructor(private afs: AngularFirestore,
-    public auth: AuthService
+    public auth: AuthService,
+    private db: AngularFireDatabase
   ) {
-    // this.userId = this.auth.getuserId();
+    this.userId = this.auth.getuserId();
     
-    this.notesCollection = this.afs.collection(`notes`, (ref) => ref.orderBy('time', 'desc').limit(5));
+    this.notesCollection = this.afs.doc(`menbers/${this.userId}`).collection(`notes`, (ref) => ref.orderBy('time', 'desc').limit(5));
     // console.log(`menbers/${this.userId}/notes`);
   }
 
@@ -36,7 +42,7 @@ export class NotesService {
   }
 
   getNote(id: string) {
-    return this.afs.doc<any>(`notes/${id}`);
+    return this.afs.doc<any>(`menbers/${this.userId}/notes/${id}`);
   }
 
   createNote(content: string) {
@@ -46,9 +52,18 @@ export class NotesService {
       time: new Date().getTime(),
     };
     return this.notesCollection.add(note)
-    .then(function(docRef) {
+    .then( docRef => {
       console.log("Document written with ID: ", docRef.id);
+      const note = {
+        noteid:docRef.id
+      };
+      var AddNote = JSON.parse(JSON.stringify( note )); //remotes the undefined fields
+      // var updates = {};
+      // updates['/notes/' + this.userId + '/' + docRef.id ] = AddNote;
+      this.db.database.ref('/notes/' + this.userId).push(AddNote);
+
     });
+    
   }
 
   updateNote(id: string, data: any) {
@@ -56,6 +71,24 @@ export class NotesService {
   }
 
   deleteNote(id: string) {
-    return this.getNote(id).delete();
+    return this.getNote(id).delete()
+    .then(docRef => {
+
+      this.notesDb = this.db.list<any>('/notes/' + this.userId )
+      .snapshotChanges().pipe(map(snap => {
+        // console.log('list.subscribe snap');
+        // console.log(snap);
+        const data = snap.map(c => ({ id: c.payload.key, ...c.payload.val() }));
+        return data.filter(note => note.noteid == id );
+      }))
+
+      this.notesDb.subscribe(snap => {
+        // console.log('this.notesDb.subscribe snap');
+        // console.log(snap[0].id);
+        this.db.list('/notes/' + this.userId).remove(snap[0].id);
+      })
+
+    });
   }
+
 }

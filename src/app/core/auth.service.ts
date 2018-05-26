@@ -34,6 +34,8 @@ export class AuthService {
 
   currentUser:UsernameDb;
 
+  uId:string;
+
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
@@ -44,22 +46,28 @@ export class AuthService {
     this.user = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
-          // this.currentUser.uid = user.uid;
+          // this.uId = user.uid;
+          // console.log("if auth.service");
+          // console.log(this.uId);
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
+          // this.uId = null;
+          // console.log("else auth.service");
+          // console.log(this.uId);
           return of(null);
         }
       })
     );
-    
-    // this.user.subscribe(user=>{
-    //   this.currentUser.uid = user.uid;
-    // });
+    this.user.subscribe(user=>{
+      this.uId = user.uid || null ;
+      // console.log("subscribe auth.service");
+      // console.log(this.uId);
+    });
         
   }
 
   getuserId(){
-    return this.currentUser.uid;
+    return this.uId ;
   }
 
   ////// OAuth Methods /////
@@ -144,6 +152,10 @@ export class AuthService {
   signOut() {
     this.afAuth.auth.signOut().then(() => {
       this.router.navigate(['/']);
+
+      this.uId = null;
+      // console.log("else auth.service");
+      // console.log(this.uId);
     });
   }
 
@@ -157,7 +169,10 @@ export class AuthService {
   private updateUserData(user: User) {
 
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
-    // this.currentUser.uid = user.uid;
+    this.uId = user.uid || null;
+    // console.log("updateUserData auth.service");
+    // console.log(this.uId);
+
     const data: User = {
       uid: user.uid,
       username: user.username || null,
@@ -166,14 +181,14 @@ export class AuthService {
       photoURL: user.photoURL || 'https://goo.gl/Fz9nrQ',
     };
     
-    // const data1 = {
-    //   email: user.email ,
-    //   username: user.username 
-    // };
+    const data1 = {
+      email: user.email ,
+      username: user.username || null
+    };
     
-    // var update1 = {};
-    // update1[`/users/${user.uid}`] = data1;
-    // this.db.database.ref().update(update1);
+    var update1 = {};
+    update1[`/users/${user.uid}`] = data1;
+    this.db.database.ref().update(update1);
 
     // const data2 = {
     //   uid: user.uid

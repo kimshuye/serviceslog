@@ -6,6 +6,7 @@ import { NotesListComponent } from './notes/notes-list/notes-list.component';
 import { AuthGuard } from './core/auth.guard';
 
 const routes: Routes = [
+  {path: '' , redirectTo: '/', pathMatch: 'full'},
   { path: '', component: HomePageComponent },
   { path: 'login', component: UserLoginComponent },
   { path: 'notes', component: NotesListComponent,  canActivate: [AuthGuard] },
