@@ -1,0 +1,30 @@
+<p>
+  mobile-list works!
+</p>
+
+<div class="">
+  <mat-form-field>
+    <input matInput placeholder="Phone Number" >
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+      <input matInput placeholder="Nick Name" >
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+      <input matInput placeholder="Telephone network" >
+  </mat-form-field>
+  <br>
+
+  <form class="">
+    <mat-form-field class="">
+      <input type="text" placeholder="Telephone network" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+
+</div>

@@ -58,7 +58,7 @@ export class AuthService {
         }
       })
     );
-    this.user.subscribe(user=>{
+    this.user.subscribe( user => {
       this.uId = user.uid || null ;
       // console.log("subscribe auth.service");
       // console.log(this.uId);

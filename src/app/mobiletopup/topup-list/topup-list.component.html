@@ -1,0 +1,28 @@
+
+
+<mat-drawer-container class="topup-list-container" autosize>
+
+  <mat-drawer #drawer class="topup-list-sidenav" mode="side" >
+
+    <!-- Customer Phone Numbers Dashboard -->
+    <app-mobile-dashboard></app-mobile-dashboard>
+    
+    <!-- <p>Auto-resizing sidenav</p>
+    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+    <button (click)="showFiller = !showFiller" mat-raised-button>
+      Toggle extra text
+    </button> -->
+
+    
+  </mat-drawer>
+
+  <div class="topup-list-sidenav-content">
+    <button type="button" mat-button (click)="drawer.toggle()">
+      Customer Phone Numbers
+    </button>
+    
+    <p>Topup-list work!</p>
+
+  </div>
+  
+</mat-drawer-container>

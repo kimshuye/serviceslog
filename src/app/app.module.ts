@@ -55,6 +55,7 @@ import { AuthService } from './core/auth.service';
 import { AuthGuard } from './core/auth.guard';
 import { NotifyService } from './core/notify.service';
 import { NotesModule } from './notes/notes.module';
+import { MobiletopupModule } from './mobiletopup/mobiletopup.module';
 
 
 
@@ -87,10 +88,7 @@ import { NotesModule } from './notes/notes.module';
     AngularFireStorageModule,
     AngularFireFunctionsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
-    CoreModule,
-    NotesModule,
     
-
     MatButtonModule,
     MatCheckboxModule,
     MatCardModule,
@@ -103,9 +101,15 @@ import { NotesModule } from './notes/notes.module';
     MatTabsModule,
     MatListModule,
     MatIconModule,
+    
 
     OwlDateTimeModule, 
-    OwlNativeDateTimeModule,
+    OwlNativeDateTimeModule, 
+
+    CoreModule,
+    NotesModule,
+    MobiletopupModule,
+    
 
   ],
   exports: [
