@@ -1,30 +1,86 @@
-<p>
-  mobile-list works!
-</p>
 
-<div class="">
-  <mat-form-field>
-    <input matInput placeholder="Phone Number" >
-  </mat-form-field>
-  <br>
-  <mat-form-field>
-      <input matInput placeholder="Nick Name" >
-  </mat-form-field>
-  <br>
-  <mat-form-field>
-      <input matInput placeholder="Telephone network" >
-  </mat-form-field>
-  <br>
+<div class="columns" >
+    <div class="column is-5">  
 
-  <form class="">
-    <mat-form-field class="">
-      <input type="text" placeholder="Telephone network" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{ option }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-  </form>
+      <p>mobile-list works!</p>
+
+      <form class="" #myForm="ngForm">
+      
+        <mat-form-field hintLabel="{{pnFormat}}">
+          <input 
+          type="text" matInput
+          placeholder="{{label.numberid}}"
+          [(ngModel)]="newPn.numberid" 
+          id="numberid" name="numberid" 
+          #numberid="ngModel"
+          [ngModelOptions]="{ updateOn: 'change' }"
+          (keyup)="onKey()"
+          maxlength="10"
+          required 
+            >
+          <mat-hint align="end">{{numberid.value.length || 0}}/10</mat-hint>
+        </mat-form-field>
+        <br>
+    
+        <mat-form-field>
+            <input 
+            type="text" matInput
+            placeholder="{{label.name}}"
+            [(ngModel)]="newPn.name" 
+            id="name" name="name" 
+            #name="ngModel"
+            [ngModelOptions]="{ updateOn: 'change' }"
+            >
+        </mat-form-field>
+        <br>
+        
+        <mat-form-field class="">
+          <input 
+          type="text" matInput
+          placeholder="{{label.telnet}}" 
+          [(ngModel)]="newPn.telnet" 
+          id="telnet" name="telnet"          
+
+          aria-label="Number"  [formControl]="myControl" [matAutocomplete]="auto"
+            >
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button
+          [disabled]="! (myForm.form.valid && ( numberid.value.length > 9 )) " 
+          (click)="submitForm()"
+          > {{label.addPn}}</button>
+    
+      </form>
+
+      <div *ngIf="newPn.numberid ">
+        <p>{{newPn | json}} </p>
+      </div>
+
+    </div>
+    <br>
+
+    <div class="column is-5">
+      {{label.cusPn}}
+
+    </div>
 
 </div>
+
+<!-- <mat-grid-list cols="2" rowHeight="2:1">
+
+  <mat-grid-tile>
+    
+    
+
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+
+  </mat-grid-tile>
+
+</mat-grid-list> -->
