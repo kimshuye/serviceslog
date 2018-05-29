@@ -18,18 +18,18 @@
           maxlength="10"
           required 
             >
-          <mat-hint align="end">{{numberid.value.length || 0}}/10</mat-hint>
+          <mat-hint align="end">{{numberid.value?.length || 0}}/10</mat-hint>
         </mat-form-field>
         <br>
     
         <mat-form-field>
-            <input 
-            type="text" matInput
-            placeholder="{{label.name}}"
-            [(ngModel)]="newPn.name" 
-            id="name" name="name" 
-            #name="ngModel"
-            [ngModelOptions]="{ updateOn: 'change' }"
+          <input 
+          type="text" matInput
+          placeholder="{{label.name}}"
+          [(ngModel)]="newPn.name" 
+          id="name" name="name" 
+          #name="ngModel"
+          [ngModelOptions]="{ updateOn: 'change' }"
             >
         </mat-form-field>
         <br>
@@ -51,36 +51,40 @@
         </mat-form-field>
         <br>
         <button mat-raised-button
-          [disabled]="! (myForm.form.valid && ( numberid.value.length > 9 )) " 
+          [disabled]="! ( myForm.form.valid &&( numberid.value?.length > 9)) " 
           (click)="submitForm()"
           > {{label.addPn}}</button>
     
       </form>
 
-      <div *ngIf="newPn.numberid ">
+      <!-- <div *ngIf="newPn.numberid ">
         <p>{{newPn | json}} </p>
-      </div>
+      </div> -->
 
     </div>
     <br>
 
-    <div class="column is-5">
-      {{label.cusPn}}
+    <div class="column is-5" >
+      {{label.cusPn}} 
+      <table class="mat-table mat-elevation-z8" style="width: 100%">
+        <thead>
+          <tr class="mat-header-row">
+            <th class="mat-header-cell">  {{label.numberid}} </th>
+            <th class="mat-header-cell">  {{label.telnet}} </th>
+            <th class="mat-header-cell">  {{label.name}} </th>
+          </tr>
+          </thead>
+        <tbody>
+          <tr class="mat-row" *ngFor="let pNum of pNumDatas ">
+            <td class="mat-cell"> {{pNum.numberid}} </td>
+            <td class="mat-cell"> {{pNum.telnet}} </td>
+            <td class="mat-cell"> {{pNum.name}} </td>
+          </tr>
+        </tbody>
+      </table>
+
 
     </div>
 
 </div>
 
-<!-- <mat-grid-list cols="2" rowHeight="2:1">
-
-  <mat-grid-tile>
-    
-    
-
-  </mat-grid-tile>
-
-  <mat-grid-tile>
-
-  </mat-grid-tile>
-
-</mat-grid-list> -->
