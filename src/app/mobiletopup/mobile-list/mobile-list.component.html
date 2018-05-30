@@ -1,6 +1,6 @@
 
 <div class="columns" >
-    <div class="column is-5">  
+    <div class="column is-4">  
 
       <p>mobile-list works!</p>
 
@@ -9,7 +9,7 @@
         <mat-form-field hintLabel="{{pnFormat}}">
           <input 
           type="text" matInput
-          placeholder="{{label.numberid}}"
+          placeholder="{{lbpncus.numberid}}"
           [(ngModel)]="newPn.numberid" 
           id="numberid" name="numberid" 
           #numberid="ngModel"
@@ -25,7 +25,7 @@
         <mat-form-field>
           <input 
           type="text" matInput
-          placeholder="{{label.name}}"
+          placeholder="{{lbpncus.name}}"
           [(ngModel)]="newPn.name" 
           id="name" name="name" 
           #name="ngModel"
@@ -37,7 +37,7 @@
         <mat-form-field class="">
           <input 
           type="text" matInput
-          placeholder="{{label.telnet}}" 
+          placeholder="{{lbpncus.telnet}}" 
           [(ngModel)]="newPn.telnet" 
           id="telnet" name="telnet"          
 
@@ -53,7 +53,7 @@
         <button mat-raised-button
           [disabled]="! ( myForm.form.valid &&( numberid.value?.length > 9)) " 
           (click)="submitForm()"
-          > {{label.addPn}}</button>
+          > {{lbpncus.addPn}}</button>
     
       </form>
 
@@ -64,26 +64,8 @@
     </div>
     <br>
 
-    <div class="column is-5" >
-      {{label.cusPn}} 
-      <table class="mat-table mat-elevation-z8" style="width: 100%">
-        <thead>
-          <tr class="mat-header-row">
-            <th class="mat-header-cell">  {{label.numberid}} </th>
-            <th class="mat-header-cell">  {{label.telnet}} </th>
-            <th class="mat-header-cell">  {{label.name}} </th>
-          </tr>
-          </thead>
-        <tbody>
-          <tr class="mat-row" *ngFor="let pNum of pNumDatas ">
-            <td class="mat-cell"> {{pNum.numberid}} </td>
-            <td class="mat-cell"> {{pNum.telnet}} </td>
-            <td class="mat-cell"> {{pNum.name}} </td>
-          </tr>
-        </tbody>
-      </table>
-
-
+    <div class="column is-8" >
+      <app-mobile-search></app-mobile-search>
     </div>
 
 </div>

@@ -51,15 +51,23 @@ import {
 } from '@angular/material';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CdkTableModule } from '@angular/cdk/table';
 
 @NgModule({
   imports: [
     CommonModule,
+
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
 
+    BrowserTransferStateModule,    
+    BrowserAnimationsModule,
+    NoopAnimationsModule,
+
+    CdkTableModule,
     // SelectionModel,
 
     MatAutocompleteModule,

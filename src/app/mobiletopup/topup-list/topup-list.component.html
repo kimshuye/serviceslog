@@ -5,7 +5,7 @@
   <mat-drawer #drawer class="topup-list-sidenav" mode="side" >
 
     <!-- Customer Phone Numbers Dashboard -->
-    <app-mobile-dashboard></app-mobile-dashboard>
+    <app-mobile-dashboard ></app-mobile-dashboard>
     
     <!-- <p>Auto-resizing sidenav</p>
     <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
@@ -17,11 +17,14 @@
   </mat-drawer>
 
   <div class="topup-list-sidenav-content">
-    <button type="button" mat-raised-button (click)="drawer.toggle()">
+    <button type="button" mat-raised-button (click)="drawer.toggle(); chSide = !chSide; " >
+      <i *ngIf="!chSide" class="material-icons">arrow_left</i> 
+      <i *ngIf="chSide" class="material-icons">arrow_right</i>
       Customer Phone Numbers
     </button>
-    
+
     <p>Topup-list work!</p>
+    Say {{selectedPn | json}}
 
   </div>
   

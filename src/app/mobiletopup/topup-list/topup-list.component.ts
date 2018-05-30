@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Phonenumbers, MobiletopupService } from '../mobiletopup.service';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-topup-list',
@@ -8,10 +10,18 @@ import { Component, OnInit } from '@angular/core';
 export class TopupListComponent implements OnInit {
 
   showFiller = false;
-  
-  constructor() { }
+
+  chSide = true;
+
+  constructor(
+    public motop:MobiletopupService
+  ) { }
 
   ngOnInit() {
+    this.motop.curPncus.subscribe(message => this.selectedPn = message);
   }
+
+  selectedPn:Phonenumbers;
+  
 
 }
