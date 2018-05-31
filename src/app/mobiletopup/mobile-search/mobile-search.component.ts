@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, HostListener } from '@angular/core';
 import { MobiletopupService, Phonenumbers, Lbpncus } from '../mobiletopup.service';
 import { MatTableDataSource, MatPaginator, PageEvent } from '@angular/material';
 import { DataSource } from '@angular/cdk/table';
@@ -71,11 +71,18 @@ export class MobileSearchComponent implements OnInit {
   }
   
   //Action when select a Movie in List item
-  selectedPn: Phonenumbers;
+  selectedPn: any;
 
+  @HostListener('onSelect')
   onSelect(selPn: Phonenumbers): void {
     // Angular Firebase
     this.selectedPn = selPn;
+    // const selpn = {
+    //   numberid:selPn.numberid,
+    //   telnet:selPn.telnet,
+    //   name:selPn.name
+    // }
+
     this.motop.translatePn(this.selectedPn);
     console.log(`selected Phone numbers = ${JSON.stringify(this.selectedPn)}`);
   }

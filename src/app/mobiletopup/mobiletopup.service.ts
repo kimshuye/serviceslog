@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AuthService } from '../core/auth.service';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -65,11 +65,14 @@ export class MobiletopupService {
 
   // =================================================
 
-  private pncusSoure = new BehaviorSubject<Phonenumbers>(null);
+  private pncusSoure = new BehaviorSubject<any>(null);
   curPncus = this.pncusSoure.asObservable();
 
-  translatePn(data:Phonenumbers){
-    this.pncusSoure.next(data);    
+  @Output() change: EventEmitter<Phonenumbers> = new EventEmitter();
+
+  translatePn(data:any){
+    this.pncusSoure.next(data);  
+    this.change.emit(data);  
   }
 
   

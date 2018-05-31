@@ -24,7 +24,27 @@
     </button>
 
     <p>Topup-list work!</p>
-    Say {{selectedPn | json}}
+    
+
+    <form class="" #myForm="ngForm">
+      
+      <mat-form-field hintLabel="{{pnFormat}}">
+        <input 
+        type="text" matInput
+        placeholder="{{lbpncus.numberid}}"
+        [(ngModel)]="selePninput.numberid" 
+        
+        id="numberid" name="numberid" 
+        #numberid="ngModel"
+        [ngModelOptions]="{ updateOn: 'change' }"
+        (keyup)="onKey()"
+        maxlength="10"
+        required 
+          >
+        <mat-hint align="end">{{numberid.value?.length || 0}}/10</mat-hint>
+      </mat-form-field>
+      <br>
+    </form>
 
   </div>
   
