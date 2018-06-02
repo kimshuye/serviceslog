@@ -1,10 +1,15 @@
 import { Component, OnInit, ViewChild, Input, HostListener } from '@angular/core';
-import { MobiletopupService, Phonenumbers, Lbpncus } from '../mobiletopup.service';
+import { MobiletopupService, Phonenumbers, LbMobilePn } from '../mobiletopup.service';
 import { MatTableDataSource, MatPaginator, PageEvent } from '@angular/material';
+
+
 import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 
+import * as _moment from 'moment';
+import { Moment } from 'moment';
+const moment = (_moment as any).default ? (_moment as any).default : _moment;
 
 
 @Component({
@@ -14,7 +19,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class MobileSearchComponent implements OnInit {
 
-  lbpncus:Lbpncus = new Lbpncus();
+  lbpncus:LbMobilePn = new LbMobilePn();
   
   displayedColumns = [ 
       // "select",
@@ -76,15 +81,22 @@ export class MobileSearchComponent implements OnInit {
   @HostListener('onSelect')
   onSelect(selPn: Phonenumbers): void {
     // Angular Firebase
-    this.selectedPn = selPn;
-    // const selpn = {
-    //   numberid:selPn.numberid,
-    //   telnet:selPn.telnet,
-    //   name:selPn.name
-    // }
+    // this.selectedPn = selPn;
 
-    this.motop.translatePn(this.selectedPn);
-    console.log(`selected Phone numbers = ${JSON.stringify(this.selectedPn)}`);
+    const selpn = {
+      // datatimeat:( new Date() ),
+      numberid:selPn.numberid,
+      telnet:selPn.telnet,
+      name:selPn.name,
+      topup:10,
+      primalfee: 0,
+      charge: 5,
+      status:"ค้างชำระ"
+      
+    }
+
+    this.motop.translatePn(selpn);
+    console.log(`selected Phone numbers = ${JSON.stringify(selpn)}`);
   }
 
 }

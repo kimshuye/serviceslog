@@ -26,25 +26,17 @@
     <p>Topup-list work!</p>
     
 
-    <form class="" #myForm="ngForm">
-      
-      <mat-form-field hintLabel="{{pnFormat}}">
-        <input 
-        type="text" matInput
-        placeholder="{{lbpncus.numberid}}"
-        [(ngModel)]="selePninput.numberid" 
-        
-        id="numberid" name="numberid" 
-        #numberid="ngModel"
-        [ngModelOptions]="{ updateOn: 'change' }"
-        (keyup)="onKey()"
-        maxlength="10"
-        required 
-          >
-        <mat-hint align="end">{{numberid.value?.length || 0}}/10</mat-hint>
-      </mat-form-field>
-      <br>
-    </form>
+    <app-topup-form></app-topup-form>
+
+    <!-- <div *ngFor="let motop of motops | async"> -->
+      <!-- {{motop | json}} | -->
+      <!-- <note-detail [note]="note"></note-detail> -->
+    <!-- </div> -->
+    
+
+    <mat-list role="list" *ngFor="let motop of motops | async">
+        <mat-list-item role="listitem">{{motop | json}}</mat-list-item>
+    </mat-list>
 
   </div>
   

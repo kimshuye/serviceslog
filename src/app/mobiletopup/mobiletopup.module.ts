@@ -54,6 +54,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CdkTableModule } from '@angular/cdk/table';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { MouseWheelDirective } from '../core/mousewheel.directive';
+import { TopupFormComponent } from './topup-form/topup-form.component';
+
 
 @NgModule({
   imports: [
@@ -69,6 +73,9 @@ import { CdkTableModule } from '@angular/cdk/table';
 
     CdkTableModule,
     // SelectionModel,
+
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule, 
 
     MatAutocompleteModule,
     MatBadgeModule,
@@ -109,12 +116,15 @@ import { CdkTableModule } from '@angular/cdk/table';
     
   ],
   declarations: [
+    
+    MouseWheelDirective,
+
     TopupListComponent, 
     TopupDetailComponent, 
     MobileListComponent, 
     MobileSearchComponent, 
     MobileDetailComponent, 
-    MobileDashboardComponent
+    MobileDashboardComponent, TopupFormComponent
   ],
   providers: [MobiletopupService]
 })

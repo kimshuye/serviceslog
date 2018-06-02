@@ -1,0 +1,128 @@
+<form class="" #myForm="ngForm">
+
+  <mat-form-field class="topup-form-field">
+    <input matInput
+    placeholder="{{lbpncus.datetimeat}}"
+    [(ngModel)]="selePninput.datetimeat"
+    [owlDateTimeTrigger]="dt" 
+    [owlDateTime]="dt"
+    [ngModelOptions]="{ updateOn: 'change' }"
+    id="datetimeat" name="datetimeat" 
+    required
+    >
+
+    <owl-date-time #dt [showSecondsTimer]="'true'" ></owl-date-time>
+
+  </mat-form-field> &nbsp;
+
+  <mat-form-field hintLabel="{{pnFormat}}" class="topup-form-field">
+    <input 
+    type="text" matInput
+    placeholder="{{lbpncus.numberid}}"
+    [(ngModel)]="selePninput.numberid" 
+    
+    id="numberid" name="numberid" 
+    #numberid="ngModel"
+    [ngModelOptions]="{ updateOn: 'change' }"
+    (keyup)="onKey()"
+    maxlength="10"
+    required 
+      >
+    <mat-hint align="end">{{numberid.value?.length || 0}}/10</mat-hint>
+  </mat-form-field> &nbsp;
+
+  <mat-form-field class="topup-form-field">
+    <input 
+    type="text" matInput
+    placeholder="{{lbpncus.telnet}}" 
+    [(ngModel)]="selePninput.telnet" 
+    id="telnet" name="telnet"          
+    #telnet
+    aria-label="Number"  [formControl]="myControl" [matAutocomplete]="auto"
+    required
+      >
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field> &nbsp;
+
+  <mat-form-field class="topup-form-field">
+    <input 
+    type="text" matInput
+    placeholder="{{lbpncus.name}}"
+    [(ngModel)]="selePninput.name" 
+    id="name" name="name" 
+    #name="ngModel"
+    [ngModelOptions]="{ updateOn: 'change' }"
+    
+      >
+  </mat-form-field> &nbsp;
+  <br>
+
+  <mat-form-field class="short-field">
+    <input 
+    mouseWheel step="10"
+    type="number" matInput 
+    placeholder="{{lbpncus.topup}}"
+    [(ngModel)]="selePninput.topup" 
+    id="topup" name="topup" 
+    #topup="ngModel"
+    [ngModelOptions]="{ updateOn: 'change' }"
+    required
+      >
+  </mat-form-field> &nbsp;
+
+  <mat-form-field class="short-field">
+    <input 
+    mouseWheel step="5"
+    type="number" matInput 
+    placeholder="{{lbpncus.primalfee}}"
+    [(ngModel)]="selePninput.primalfee" 
+    id="primalfee" name="primalfee" 
+    #primalfee="ngModel"
+    [ngModelOptions]="{ updateOn: 'change' }"
+    required
+      >
+  </mat-form-field> &nbsp;
+
+  <mat-form-field class="short-field">
+    <input 
+    mouseWheel step="5"
+    type="number" matInput 
+    placeholder="{{lbpncus.charge}}"
+    [(ngModel)]="selePninput.charge" 
+    id="charge" name="charge" 
+    #charge="ngModel"
+    [ngModelOptions]="{ updateOn: 'change' }"
+    required
+      >
+  </mat-form-field> &nbsp;
+
+  <mat-form-field class="topup-form-field">
+    <input 
+    type="text" matInput
+    placeholder="{{lbpncus.status}}" 
+    [(ngModel)]="selePninput.status" 
+    id="status" name="status"          
+    #status
+    aria-label="Number"  [formControl]="statControl" [matAutocomplete]="auto1"
+    required
+      >
+    <mat-autocomplete #auto1="matAutocomplete">
+      <mat-option *ngFor="let stat of filteredStats | async" [value]="stat">
+        {{ stat }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field> &nbsp;
+
+  <button mat-raised-button
+    [disabled]=" ! (( myForm.form.valid ) && ( numberid.value?.length > 9) && ( telnet.value?.length > 0 )) " 
+    (click)="submitForm()"
+    > {{lbpncus.save}}</button>
+
+  <!-- {{ ( myForm.form.valid ) }} | {{  ( numberid.value?.length > 9) }}  | {{  ( telnet.value?.length > 0 ) }} <br>
+  {{ ! (( myForm.form.valid ) && ( numberid.value?.length > 9) && ( telnet.value?.length > 0 )) }} -->
+
+</form>

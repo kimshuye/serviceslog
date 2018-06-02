@@ -1,5 +1,5 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AuthService } from '../core/auth.service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { map } from 'rxjs/operators';
@@ -19,11 +19,16 @@ export interface Phonenumbers{
 export class MobiletopupService {
   
   pathPn = "phonenumbers";
+  pathMotop = "mobiletopup";
+
   userId;
 
   phoneNums:Observable<Phonenumbers[]>;
 
   pNums:Phonenumbers[];
+
+  motopsCollection: AngularFirestoreCollection<any>;
+  motopDocument:   AngularFirestoreDocument<any>;
 
   constructor(private afs: AngularFirestore,
     public auth: AuthService,
@@ -31,6 +36,7 @@ export class MobiletopupService {
   ) { 
     this.userId = this.auth.getuserId();
     this.getPnum();
+    this.motopsCollection = this.afs.doc(`menbers/${this.userId}`).collection(`${this.pathMotop}`, (ref) => ref.orderBy('datetimeat', 'desc').limit(5));
   }
 
   getPnum(){
@@ -63,23 +69,79 @@ export class MobiletopupService {
       this.db.database.ref().update(updates);
   }
 
-  // =================================================
+  saveMobileTopup(newMotop){
 
-  private pncusSoure = new BehaviorSubject<any>(null);
-  curPncus = this.pncusSoure.asObservable();
-
-  @Output() change: EventEmitter<Phonenumbers> = new EventEmitter();
-
-  translatePn(data:any){
-    this.pncusSoure.next(data);  
-    this.change.emit(data);  
+    var pncus = {
+      numberid: newMotop.numberid,
+      telnet: newMotop.telnet,
+      name: newMotop.name
+    };
+    this.addPhonenum(pncus);
+    this.addMotop(newMotop);
+    
   }
 
+  // =================================================
+
+  // private pncusSoure = new BehaviorSubject<any>(null);
+  // curPncus = this.pncusSoure.asObservable();
+
+  @Output() translate: EventEmitter<MobileTopup> = new EventEmitter();
+
+  translatePn(data:any){
+    // this.pncusSoure.next(data);  
+    this.translate.emit(data);  
+  }
+
+  // =================================================
+
+  getData(): Observable<any[]> {
+    // ['added', 'modified', 'removed']
+    return this.motopsCollection.snapshotChanges().pipe(
+      map((actions) => {
+        return actions.map((a) => {
+          const data = a.payload.doc.data();
+          return { id: a.payload.doc.id, ...data };
+        });
+      })
+    );
+  }
+
+  getMotop(id: string) {
+    return this.afs.doc<any>(`menbers/${this.userId}/${this.pathMotop}/${id}`);
+  }
+
+  addMotop(newMotop: any) {
+    
+    return this.motopsCollection.add(newMotop)
+    .then( docRef => {
+      console.log("Document written with ID: ", docRef.id);
+      // const motop = {
+      //   motopid:docRef.id
+      // };
+      // var AddMotop = JSON.parse(JSON.stringify( motop )); //remotes the undefined fields
+      // var updates = {};
+      // updates['/notes/' + this.userId + '/' + docRef.id ] = AddNote;
+      // this.db.database.ref(`/${this.pathMotop}/` + this.userId).push(AddMotop);
+
+    });
+    
+  }
   
 }
 
+export interface MobileTopup{
+  datetimeat:Date;
+  numberid: string;
+  telnet: string;
+  name?: string;
+  topup:number;
+  charge:number;
+  primalfee:number;
 
-export class Lbpncus {
+}
+
+export class LbMobilePn {
 
   public numberid = "เบอร์";
   public name = "ชื่อเล่น";
@@ -87,22 +149,14 @@ export class Lbpncus {
   public addPn = "เพิ่ม/แก้ไข เบอร์";
   public cusList = "รายการเบอร์ ลูกค้า";
   public search = "ค้นหา";
+  public datetimeat = "วัน เวลา";
+  public topup = "ยอดเติม";
+  public primalfee = "ค่าธรรมเนียม ขั้นต้น";
+  public charge = "ค่าบริการ";
+  public save = "บันทึก";
+  public status = "สถานะการชำระ";
 
-  constructor(
-    numid:string = "เบอร์",
-    telnet:string = "เครือข่าย โทรศัพท์",
-    name:string = "ชื่อเล่น",
-    addpn:string = "เพิ่ม/แก้ไข เบอร์",
-    cuslist:string = "รายการเบอร์ ลูกค้า",
-    search:string = "ค้นหา"
-  ){
-    this.numberid = numid;
-    this.name = name;
-    this.telnet = telnet;
-    this.addPn = addpn;
-    this.cusList = cuslist;
-    this.search = search;
-  }
+  constructor(){  }
   
   setInti(){
     this.numberid = "เบอร์";
@@ -111,6 +165,11 @@ export class Lbpncus {
     this.addPn = "เพิ่ม/แก้ไข เบอร์";
     this.cusList = "รายการเบอร์ ลูกค้า";
     this.search = "ค้นหา";
+    this.topup = "ยอดเติม";    
+    this.primalfee = "ค่าธรรมเนียม ขั้นต้น";
+    this.charge = "ค่าบริการ";
+    this.save = "บันทึก";
+    this.status = "สถานะการชำระ";
   }
 
 }

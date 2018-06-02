@@ -6,7 +6,7 @@ import { startWith , map } from 'rxjs/operators';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {DataSource} from '@angular/cdk/collections';
 
-import { MobiletopupService , Phonenumbers, Lbpncus } from '../mobiletopup.service';
+import { MobiletopupService , Phonenumbers, LbMobilePn } from '../mobiletopup.service';
 
 @Component({
   selector: 'app-mobile-list',
@@ -15,7 +15,7 @@ import { MobiletopupService , Phonenumbers, Lbpncus } from '../mobiletopup.servi
 })
 export class MobileListComponent implements OnInit {
 
-  lbpncus:Lbpncus = new Lbpncus();
+  lbpncus:LbMobilePn = new LbMobilePn();
 
   // @Input()@Output() newPn:Phonenumbers;
 
