@@ -18,3 +18,60 @@
     
 }
 
+/* Structure */
+.example-container {
+  position: relative;
+}
+
+.example-table-container {
+  position: absolute;
+  max-height: 400px;
+  overflow: auto;
+  
+}
+
+table {
+  width: 100%;
+}
+
+.mat-header-cell {
+    text-align: center;
+    vertical-align:middle;
+}
+
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-rate-limit-reached {
+  color: #980000;
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Column Widths */
+
+.mat-column-telnet,
+.mat-column-name,
+.mat-column-topup,
+.mat-column-primalfee,
+.mat-column-charge
+{
+  max-width: 60px;
+}
+
+.mat-column-numberid,
+.mat-column-datetimeat,
+.mat-column-status
+{
+  max-width: 125px;
+}

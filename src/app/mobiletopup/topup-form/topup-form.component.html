@@ -118,7 +118,7 @@
   </mat-form-field> &nbsp;
 
   <button mat-raised-button
-    [disabled]=" ! (( myForm.form.valid ) && ( numberid.value?.length > 9) && ( telnet.value?.length > 0 )) " 
+    [disabled] = " ! (( myForm.form.valid ) && ( numberid.value?.length > 9) && ( telnet.value?.length > 0 )) " 
     (click)="submitForm()"
     > {{lbpncus.save}}</button>
 

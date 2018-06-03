@@ -36,7 +36,7 @@ export class MobiletopupService {
   ) { 
     this.userId = this.auth.getuserId();
     this.getPnum();
-    this.motopsCollection = this.afs.doc(`menbers/${this.userId}`).collection(`${this.pathMotop}`, (ref) => ref.orderBy('datetimeat', 'desc').limit(5));
+    this.motopsCollection = this.afs.doc(`menbers/${this.userId}`).collection(`${this.pathMotop}`, (ref) => ref.orderBy('datetimeat', 'desc').limit(500));
   }
 
   getPnum(){
@@ -95,7 +95,7 @@ export class MobiletopupService {
 
   // =================================================
 
-  getData(): Observable<any[]> {
+  getMotopsData(): Observable<any[]> {
     // ['added', 'modified', 'removed']
     return this.motopsCollection.snapshotChanges().pipe(
       map((actions) => {
@@ -127,10 +127,15 @@ export class MobiletopupService {
     });
     
   }
+
+  deleMotop(id:string){
+    return this.getMotop(id).delete();
+  }
   
 }
 
 export interface MobileTopup{
+  id:string;
   datetimeat:Date;
   numberid: string;
   telnet: string;
@@ -138,7 +143,7 @@ export interface MobileTopup{
   topup:number;
   charge:number;
   primalfee:number;
-
+  status:string;
 }
 
 export class LbMobilePn {
@@ -155,6 +160,7 @@ export class LbMobilePn {
   public charge = "ค่าบริการ";
   public save = "บันทึก";
   public status = "สถานะการชำระ";
+  public delete = "ลบ";
 
   constructor(){  }
   
@@ -170,6 +176,7 @@ export class LbMobilePn {
     this.charge = "ค่าบริการ";
     this.save = "บันทึก";
     this.status = "สถานะการชำระ";
+    this.delete = "ลบ";
   }
 
 }

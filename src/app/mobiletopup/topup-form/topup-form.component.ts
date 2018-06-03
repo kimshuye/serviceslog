@@ -119,6 +119,8 @@ export class TopupFormComponent implements OnInit {
 
     console.log(this.selePninput);
 
+    console.log(this.selePninput.datetimeat);
+
     this.selePninput = {
       datetimeat:new Date(),
       numberid:"",
