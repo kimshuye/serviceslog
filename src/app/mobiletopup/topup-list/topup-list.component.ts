@@ -9,6 +9,7 @@ import { MomentDateTimeAdapter } from 'ng-pick-datetime-moment';
 import * as _moment from 'moment';
 import { Moment } from 'moment';
 import { startWith, map } from 'rxjs/operators';
+import { SelectionModel } from '@angular/cdk/collections';
 const moment = (_moment as any).default ? (_moment as any).default : _moment;
 
 export const MY_MOMENT_DATE_TIME_FORMATS: OwlDateTimeFormats = {
@@ -36,18 +37,28 @@ export const MY_MOMENT_DATE_TIME_FORMATS: OwlDateTimeFormats = {
 })
 export class TopupListComponent implements OnInit {
 
-  lbpncus:LbMobilePn = new LbMobilePn();
-
   showFiller = false;
 
   chSide = true;
+
+  lbpncus:LbMobilePn = new LbMobilePn();
+
+  myControl: FormControl = new FormControl();  
+  options = ['ais', 'dtac', 'true'];
+  filteredOptions: Observable<string[]>;
+  
+  statControl: FormControl = new FormControl();
+  statValue = ['ค้างชำระ', 'ชำระแล้ว' ];
+  filteredStats: Observable<string[]>;
 
   motops: Observable<any[]>;
 
   constructor(
     public motopServ:MobiletopupService
   ){
-    
+    const initialSelection = [];
+    const allowMultiSelect = false;
+    this.selection = new SelectionModel<MobileTopup>(allowMultiSelect, initialSelection);
   }
 
   ngOnInit(){
@@ -55,9 +66,8 @@ export class TopupListComponent implements OnInit {
     this.motops.subscribe(snap =>{
       const data = snap;
       data.map(a => {
-        console.log(a.datetimeat);
         a.datetimeat = (new Date( a.datetimeat.seconds*1000) ) ;
-        console.log(a.datetimeat);
+        // console.log(a.datetimeat);
       });  
       this.dataSource.data = (data);
     })
@@ -65,8 +75,16 @@ export class TopupListComponent implements OnInit {
     this.dataSource.paginator = this.paginator; 
     this.dataSource.sort = this.sort;
      // If the user changes the sort order, reset back to the first page.
-     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-        
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    
+    this.filteredStats = this.statControl.valueChanges.pipe(
+      startWith(''),
+      map(val => this.statFilter(val))
+    ); 
+  }
+
+  statFilter(val: string): string[] {
+    return this.statValue.filter(stat => stat.indexOf(val) === 0);
   }
 
   displayedColumns = [ 
@@ -82,8 +100,7 @@ export class TopupListComponent implements OnInit {
     "status",
     "deletebutton"
   ];
-
-  deleBl = false;
+  
 
   dataSource:MatTableDataSource<MobileTopup> = new MatTableDataSource<MobileTopup>(ELEMENT_DATA);
   data: MobileTopup[] = [];
@@ -103,13 +120,32 @@ export class TopupListComponent implements OnInit {
       + ((pn.length > 6) ? '-' + pn.substring(6,10): '' );
 
   }
+  
+  deleBl = false;
 
-  ondele(element){
+  ondele(element:any){
     this.motopServ.deleMotop(element.id);
   }
 
-  myMethod(){
-    console.log("double ciick!");
+  selection:SelectionModel<MobileTopup>;
+
+  onupdate(element:any){
+    const updateMotop = {
+      datetimeat:element.datetimeat,
+      numberid: element.numberid,
+      telnet: element.telnet,
+      name: element.name,
+      topup:element.topup,
+      charge:element.charge,
+      primalfee:element.primalfee,
+      status:element.status
+    }
+    this.motopServ.updateMotop(element.id,updateMotop);
+    this.selection.clear();
+
+    // console.log(element.id);
+    // console.log(updateMotop);
+    
   }
 
 }

@@ -69,9 +69,19 @@ table {
   max-width: 60px;
 }
 
+.mat-column-topup,
+.mat-column-primalfee,
+.mat-column-charge
+{
+  text-align:end;
+}
+
 .mat-column-numberid,
-.mat-column-datetimeat,
-.mat-column-status
+.mat-column-datetimeat
 {
   max-width: 125px;
+}
+
+.mat-column-status{
+  max-width: 135px;
 }

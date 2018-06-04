@@ -101,7 +101,7 @@
   </mat-form-field> &nbsp;
 
   <mat-form-field class="topup-form-field">
-    <input 
+    <!-- <input 
     type="text" matInput
     placeholder="{{lbpncus.status}}" 
     [(ngModel)]="selePninput.status" 
@@ -114,7 +114,13 @@
       <mat-option *ngFor="let stat of filteredStats | async" [value]="stat">
         {{ stat }}
       </mat-option>
-    </mat-autocomplete>
+    </mat-autocomplete> -->
+
+    <mat-select placeholder="{{lbpncus.status}}" [(value)]="selePninput.status" required >
+      <mat-option *ngFor="let stat of filteredStats | async" [value]="stat">
+        {{stat}}
+      </mat-option>
+    </mat-select>
   </mat-form-field> &nbsp;
 
   <button mat-raised-button

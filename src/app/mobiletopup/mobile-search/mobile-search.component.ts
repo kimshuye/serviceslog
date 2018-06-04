@@ -91,7 +91,7 @@ export class MobileSearchComponent implements OnInit {
       topup:10,
       primalfee: 0,
       charge: 5,
-      status:"ค้างชำระ"
+      status:"ชำระแล้ว"
       
     }
 

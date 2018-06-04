@@ -36,7 +36,7 @@ export class MobiletopupService {
   ) { 
     this.userId = this.auth.getuserId();
     this.getPnum();
-    this.motopsCollection = this.afs.doc(`menbers/${this.userId}`).collection(`${this.pathMotop}`, (ref) => ref.orderBy('datetimeat', 'desc').limit(500));
+    this.motopsCollection = this.afs.doc(`menbers/${this.userId}`).collection(`${this.pathMotop}`, (ref) => ref.orderBy('datetimeat', 'desc') );
   }
 
   getPnum(){
@@ -126,6 +126,10 @@ export class MobiletopupService {
 
     });
     
+  }
+
+  updateMotop(id: string, data: any) {
+    return this.getMotop(id).update(data);
   }
 
   deleMotop(id:string){
